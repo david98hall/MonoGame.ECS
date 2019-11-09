@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Copyright>David Hall</Copyright>
+    <Description>Entity Component System (ECS) for MonoGame.</Description>
+    <RepositoryUrl>https://github.com/Davuskus/MonoGame.ECS</RepositoryUrl>
+    <Authors>David Hall</Authors>
+    <Company>Davuskus</Company>
+    <PackageTags>MonoGame, ECS, Entity, Entities, Component, Components, System, Systems, Extended, MonoGame.Extended, MonoGame.Extended.Entities</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +20,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MonoGame.Utils\MonoGame.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
