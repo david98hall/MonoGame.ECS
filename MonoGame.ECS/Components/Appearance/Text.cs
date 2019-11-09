@@ -6,13 +6,14 @@ using MonoGame.Utils.Tuples;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using static MonoGame.Utils.Text.StylizedTextParser;
 
 namespace MonoGame.ECS.Components.Appearance
 {
     /// <summary>
     /// Represents text with possibly different fonts, colors and sizes within itself. It is enumerable over the rows of its own text.
     /// </summary>
-    public class Text : IEnumerable<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, (float Width, float Height) RowSize)>
+    public class Text : IEnumerable<(IEnumerable<Word> Row, (float Width, float Height) Size)>
     {
 
         #region Properties
@@ -64,7 +65,7 @@ namespace MonoGame.ECS.Components.Appearance
         #region Fields
         private readonly StylizedTextParser textParser;
 
-        private List<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, MutableTuple<float, float> RowSize)> rows;
+        private List<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rows;
         #endregion
 
         #region Constructors
@@ -75,7 +76,7 @@ namespace MonoGame.ECS.Components.Appearance
             RelativeCenterPosition = new Vector2(0, 0);
             RowSpacing = 3;
             Alignment = TextAlignment.LEFT;
-            rows = new List<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, MutableTuple<float, float> RowSize)>(1);
+            rows = new List<(IEnumerable<Word> Row, MutableTuple<float, float> Size)>(1);
         }
 
         /// <summary>
@@ -108,8 +109,7 @@ namespace MonoGame.ECS.Components.Appearance
             AddRows(textParser.ParseAndFitTextHorizontally(text, maxWidth));
         }
 
-        private void AddRows((IEnumerable<(IEnumerable<(string Text, SpriteFont Font, Color TextColor)> RowText, MutableTuple<float, float> RowSize)> Rows,
-            (float Width, float Height) TextSize) text)
+        private void AddRows((IEnumerable<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> Rows, (float Width, float Height) TextSize) text)
         {
             rows.AddRange(text.Rows);
             Size = text.TextSize;
@@ -117,7 +117,7 @@ namespace MonoGame.ECS.Components.Appearance
         #endregion
 
         #region Implementing IEnumerable
-        public IEnumerator<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, (float Width, float Height) RowSize)> GetEnumerator()
+        public IEnumerator<(IEnumerable<Word> Row, (float Width, float Height) Size)> GetEnumerator()
         {
             return new RowEnumerator(rows);
         }
@@ -128,33 +128,30 @@ namespace MonoGame.ECS.Components.Appearance
         }
         #endregion
 
-        #region Enums and classes
-        /// <summary>
-        /// Text alignment.
-        /// </summary>
+        #region Datatypes        
         public enum TextAlignment
         {
             LEFT, CENTER, RIGHT
         }
 
-        public class RowEnumerator : IEnumerator<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, (float Width, float Height) RowSize)>
+        public class RowEnumerator : IEnumerator<(IEnumerable<Word> Row, (float Width, float Height) Size)>
         {
 
-            public (IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, (float Width, float Height) RowSize) Current
+            public (IEnumerable<Word> Row, (float Width, float Height) Size) Current
             {
                 get
                 {
-                    var (RowText, RowSize) = rowEnumerator.Current;
-                    return (RowText, (RowSize.Item1, RowSize.Item2));
+                    var (Row, Size) = rowEnumerator.Current;
+                    return (Row, (Size.Item1, Size.Item2));
                 }
             }
 
             object IEnumerator.Current => throw new NotImplementedException();
 
-            private IEnumerable<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, MutableTuple<float, float> RowSize)> rows;
-            private IEnumerator<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, MutableTuple<float, float> RowSize)> rowEnumerator;
+            private IEnumerable<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rows;
+            private IEnumerator<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rowEnumerator;
 
-            public RowEnumerator(IList<(IEnumerable<(string Text, SpriteFont Font, Color Color)> RowText, MutableTuple<float, float> RowSize)> rows)
+            public RowEnumerator(IList<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rows)
             {
                 this.rows = rows;
                 Reset();
@@ -176,4 +173,5 @@ namespace MonoGame.ECS.Components.Appearance
         #endregion
 
     }
+
 }

@@ -74,7 +74,7 @@ namespace MonoGame.ECS.Systems
                 var drawPosition = new Vector2(startX, startY);
 
                 // Draw all rows in the text
-                foreach (var (RowText, RowSize) in text)
+                foreach (var (Row, RowSize) in text)
                 {
 
                     // Set where the row should be drawn on the x-axis depending on the text alignment
@@ -97,13 +97,13 @@ namespace MonoGame.ECS.Systems
                     }
 
                     // Draw all words in the current row
-                    foreach (var (Text, Font, Color) in RowText)
+                    foreach (var word in Row)
                     {
                         // Draw word
-                        spriteBatch.DrawString(Font, Text, drawPosition, Color);
+                        spriteBatch.DrawString(word.Font, word.Text, drawPosition, word.Color);
 
                         // Update draw position
-                        var wordWidth = Font.MeasureString(Text).X;
+                        var wordWidth = word.Font.MeasureString(word.Text).X;
                         drawPosition += new Vector2(wordWidth, 0);
                     }
 
