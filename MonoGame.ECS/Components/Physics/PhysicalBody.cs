@@ -1,0 +1,41 @@
+﻿using Microsoft.Xna.Framework;
+using MonoGame.ECS.Components.Bounds;
+using System.Collections.Generic;
+
+namespace MonoGame.ECS.Components.Physics
+{
+    public class PhysicalBody
+    {
+
+        // Mass
+        public float Mass { get; private set; }
+
+        public float AreaDensity { get; set; }
+
+        // TODO public (float X, float Y) MassCenter { get; private set; }
+
+        public Body Body
+        {
+            get => body;
+            set
+            {
+                body = value;
+                Mass = body.Area * AreaDensity;
+                // TODO Calculate mass center
+            }
+        }
+        private Body body;
+
+        public PhysicalBody(Body body, float areaDensity = 1)
+        {
+            AreaDensity = areaDensity;
+            Body = body;
+        }
+
+        public PhysicalBody(IEnumerable<Vector2> vertices, float areaDensity = 1)
+            : this(new Body(vertices), areaDensity)
+        {
+        }
+
+    }
+}

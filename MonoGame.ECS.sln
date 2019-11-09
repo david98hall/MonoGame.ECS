@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.ECS", "MonoGame.ECS\MonoGame.ECS.csproj", "{C6B0C5B7-ABAD-4B50-87D0-3AB05DE4152D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Utils", "MonoGame.Utils\MonoGame.Utils.csproj", "{DE67606A-7118-4145-9304-DB458E61C524}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6B0C5B7-ABAD-4B50-87D0-3AB05DE4152D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B0C5B7-ABAD-4B50-87D0-3AB05DE4152D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B0C5B7-ABAD-4B50-87D0-3AB05DE4152D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B0C5B7-ABAD-4B50-87D0-3AB05DE4152D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE67606A-7118-4145-9304-DB458E61C524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE67606A-7118-4145-9304-DB458E61C524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE67606A-7118-4145-9304-DB458E61C524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE67606A-7118-4145-9304-DB458E61C524}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {538EC66F-E248-4F78-ACE7-6E9A67C172BA}
+	EndGlobalSection
+EndGlobal
