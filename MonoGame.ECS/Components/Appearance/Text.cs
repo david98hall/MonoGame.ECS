@@ -69,9 +69,14 @@ namespace MonoGame.ECS.Components.Appearance
         #endregion
 
         #region Constructors
-        private Text(ContentManager content, SpriteFont defaultFont = null, Color defaultColor = default, float rowSpacing = 3)
+        private Text(
+            ContentManager content,
+            SpriteFont defaultFont = null,
+            Color defaultColor = default,
+            float rowSpacing = 3,
+            char newLine = '\n')
         {
-            textParser = new StylizedTextParser(content, defaultFont, defaultColor, rowSpacing);
+            textParser = new StylizedTextParser(content, defaultFont, defaultColor, rowSpacing, newLine);
             Size = (-1, -1);
             RelativeCenterPosition = new Vector2(0, 0);
             RowSpacing = 3;
@@ -87,8 +92,15 @@ namespace MonoGame.ECS.Components.Appearance
         /// <param name="defaultFont">The default font where nothing else is specified.</param>
         /// <param name="defaultColor">The default color where nothing else is specified.</param>
         /// <param name="rowSpacing">The spacing between each row in the text</param>
-        public Text(string text, ContentManager content, SpriteFont defaultFont = null, Color defaultColor = default, float rowSpacing = 3)
-            : this(content, defaultFont, defaultColor, rowSpacing)
+        /// <param name="newLine">The character that is used for declaring new lines.</param>
+        public Text(
+            string text,
+            ContentManager content,
+            SpriteFont defaultFont = null,
+            Color defaultColor = default,
+            float rowSpacing = 3,
+            char newLine = '\n')
+            : this(content, defaultFont, defaultColor, rowSpacing, newLine)
         {
             AddRows(textParser.ParseText(text));
         }
@@ -103,8 +115,16 @@ namespace MonoGame.ECS.Components.Appearance
         /// <param name="defaultFont">The default font where nothing else is specified.</param>
         /// <param name="defaultColor">The default color where nothing else is specified.</param>
         /// <param name="rowSpacing">The spacing between each row in the text</param>
-        public Text(string text, float maxWidth, ContentManager content, SpriteFont defaultFont = null, Color defaultColor = default, float rowSpacing = 3)
-            : this(content, defaultFont, defaultColor, rowSpacing)
+        /// <param name="newLine">The character that is considered as a new line.</param>
+        public Text(
+            string text,
+            float maxWidth,
+            ContentManager content,
+            SpriteFont defaultFont = null,
+            Color defaultColor = default,
+            float rowSpacing = 3,
+            char newLine = '\n')
+            : this(content, defaultFont, defaultColor, rowSpacing, newLine)
         {
             AddRows(textParser.ParseAndFitTextHorizontally(text, maxWidth));
         }
