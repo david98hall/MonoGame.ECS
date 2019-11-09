@@ -16,10 +16,7 @@
     <PackageReference Include="MonoGame.Extended" Version="3.7.0" />
     <PackageReference Include="MonoGame.Extended.Entities" Version="3.7.0" />
     <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\MonoGame.Utils\MonoGame.Utils.csproj" />
+    <PackageReference Include="MonoGame.Utils" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
