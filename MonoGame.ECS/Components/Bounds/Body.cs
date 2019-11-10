@@ -15,23 +15,32 @@ namespace MonoGame.ECS.Components.Bounds
             set
             {
                 shape = value;
+
+                // Update properties
+                MaxWidth = shape.Right - shape.Left;
+                MaxHeight = shape.Bottom - shape.Top;
                 Area = shape.GetArea();
-                RelativeBounds = (RelativePosition.X,
-                    RelativePosition.Y,
-                    RelativePosition.X + shape.Right,
-                    RelativePosition.Y + shape.Bottom);
+                UpdateRelaviteBounds();
             }
         }
         private Polygon shape;
 
-        public float MaxWidth => shape.Right - shape.Left;
+        public float MaxWidth { get; private set; }
 
-        public float MaxHeight => shape.Bottom - shape.Top;
+        public float MaxHeight { get; private set; }
 
         public float Area { get; private set; }
 
-        public Vector2 RelativePosition { get; set; }
-
+        public Vector2 RelativePosition
+        {
+            get => relativePosition;
+            set
+            {
+                relativePosition = value;
+                UpdateRelaviteBounds();
+            }
+        }
+        private Vector2 relativePosition;
         public (float Left, float Top, float Right, float Bottom) RelativeBounds { get; private set; }
 
         public Body(IEnumerable<Vector2> vertices)
@@ -44,6 +53,14 @@ namespace MonoGame.ECS.Components.Bounds
         {
             Shape = new Polygon(rectangle.GetCorners());
             RelativePosition = new Vector2(rectangle.X, rectangle.Y);
+        }
+
+        private void UpdateRelaviteBounds()
+        {
+            RelativeBounds = (RelativePosition.X,
+                RelativePosition.Y,
+                RelativePosition.X + shape.Right,
+                RelativePosition.Y + shape.Bottom);
         }
 
     }
