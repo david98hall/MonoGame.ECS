@@ -42,15 +42,25 @@ namespace MonoGame.ECS.Systems.Input.Pointer
                                 pointerInput.RegisterInputEndInBounds(pointerArgs);
                                 break;
                             case TouchLocationState.Invalid:
-                                pointerInput.RegisterCancelledInput(pointerArgs);
+                                pointerInput.RegisterCancelledInputInBounds(pointerArgs);
+                                break;
+                            default:
                                 break;
                         }
                     }
-                    else if (pointerInput.IsDown && (touchLocation.State == TouchLocationState.Released
-                            || touchLocation.State == TouchLocationState.Invalid))
+                    else if (pointerInput.IsDown)
                     {
-                        // The previously down pointer was released outside of the bounds of the entity
-                        pointerInput.RegisterInputEndOutsideBounds(pointerArgs);
+                        switch (touchLocation.State)
+                        {
+                            case TouchLocationState.Released:
+                                pointerInput.RegisterInputEndOutsideBounds(pointerArgs);
+                                break;
+                            case TouchLocationState.Invalid:
+                                pointerInput.RegisterCancelledInputOutsideBounds(pointerArgs);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }

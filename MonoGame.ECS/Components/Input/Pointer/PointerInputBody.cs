@@ -20,5 +20,10 @@ namespace MonoGame.ECS.Components.Input.Pointer
             Body = new Body(rectangle);
         }
 
+        public PointerInputBody(Body body)
+        {
+            Body = body;
+        }
+
     }
 }

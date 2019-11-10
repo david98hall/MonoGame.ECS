@@ -13,7 +13,8 @@ namespace MonoGame.ECS.Components.Input.Pointer
         public event EventHandler<PointerEventArgs> OnEndInBounds;
         public event EventHandler<PointerEventArgs> OnEndOutsideBounds;
         public event EventHandler<PointerEventArgs> OnMove;
-        public event EventHandler<PointerEventArgs> OnCancel;
+        public event EventHandler<PointerEventArgs> OnCancelInBounds;
+        public event EventHandler<PointerEventArgs> OnCancelOutsideBounds;
 
         /// <summary>
         /// If at least one pointer is down within the entity in question.
@@ -27,6 +28,21 @@ namespace MonoGame.ECS.Components.Input.Pointer
         /// </summary>
         public bool CountMovingAsDown { get; set; }
 
+        /// <summary>
+        /// True if all start inputs (e.g. a touch press) should invoke the
+        /// corresponding event (OnStart). False if the OnStart event
+        /// should only be invoked if there is no other active pointer that is down.
+        /// </summary>
+        public bool InvokeOnAllStartInputs { get; set; }
+
+        /// <summary>
+        /// Only relevant for pointer input started within the enity in question.
+        /// True if all start inputs (e.g. a touch release) should invoke the
+        /// corresponding events. False if end input events should only be invoked
+        /// when there is no other active pointers down.
+        /// </summary>
+        public bool InvokeOnAllEndInputsInBounds { get; set; }
+
         // The key is the pointer id and the value is if it's down or not
         private readonly HashSet<int> downPointers;
 
@@ -37,17 +53,36 @@ namespace MonoGame.ECS.Components.Input.Pointer
         /// True if this counts a moving pointer as this being down, 
         /// even though it for example does not start within the entity in question.
         /// </param>
-        public PointerInput(bool countMovingAsDown = false)
+        /// <param name="invokeOnAllStartInputs">
+        /// True if all start inputs (e.g. a touch press) should invoke the
+        /// corresponding event (OnStart). False if the OnStart event
+        /// should only be invoked if there is no other active pointer that is down.
+        /// </param>
+        /// <param name="invokeOnAllEndInputsInBounds">
+        /// True if all start inputs (e.g. a touch release) should invoke the
+        /// corresponding events. False if end input events should only be invoked
+        /// when there is no other active pointers down.
+        /// </param>
+        public PointerInput(
+            bool countMovingAsDown = false,
+            bool invokeOnAllStartInputs = false,
+            bool invokeOnAllEndInputsInBounds = false)
         {
             CountMovingAsDown = countMovingAsDown;
+            InvokeOnAllStartInputs = invokeOnAllStartInputs;
+            InvokeOnAllEndInputsInBounds = invokeOnAllEndInputsInBounds;
             downPointers = new HashSet<int>();
         }
 
         #region Register events
         public void RegisterInputStart(PointerEventArgs args)
         {
+            var shouldInvoke = InvokeOnAllStartInputs || !IsDown;
             downPointers.Add(args.RawTouchLocation.Id);
-            OnStart?.Invoke(this, args);
+            if (shouldInvoke)
+            {
+                OnStart?.Invoke(this, args);
+            }
         }
 
         public void RegisterInputMove(PointerEventArgs args)
@@ -69,9 +104,14 @@ namespace MonoGame.ECS.Components.Input.Pointer
             RegisterStoppedInput(args, OnEndOutsideBounds);
         }
 
-        public void RegisterCancelledInput(PointerEventArgs args)
+        public void RegisterCancelledInputInBounds(PointerEventArgs args)
         {
-            RegisterStoppedInput(args, OnCancel);
+            RegisterStoppedInput(args, OnCancelInBounds);
+        }
+
+        public void RegisterCancelledInputOutsideBounds(PointerEventArgs args)
+        {
+            RegisterStoppedInput(args, OnCancelOutsideBounds);
         }
         #endregion
 
@@ -90,7 +130,7 @@ namespace MonoGame.ECS.Components.Input.Pointer
             if (IsDown)
             {
                 downPointers.Remove(args.RawTouchLocation.Id);
-                if (!IsDown)
+                if (!IsDown || InvokeOnAllEndInputsInBounds)
                 {
                     // Only register a released input if there aren't any others 
                     // that are within the bounds of the entity in question
