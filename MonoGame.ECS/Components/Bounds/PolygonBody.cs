@@ -45,12 +45,7 @@ namespace MonoGame.ECS.Components.Bounds
 
         public override bool IsPointWithin(Vector2 point)
         {
-            return GeometryUtils.IsWithinPolygon(
-                point,
-                Shape.Vertices,
-                RelativePosition,
-                MaxWidth,
-                MaxHeight);
+            return GeometryUtils.IsWithinPolygon(point, Shape.Vertices, RelativePosition);
         }
     }
 }
