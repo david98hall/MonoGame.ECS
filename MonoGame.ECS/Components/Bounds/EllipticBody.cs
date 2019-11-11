@@ -6,13 +6,34 @@ namespace MonoGame.ECS.Components.Bounds
 {
     public class EllipticBody : Body
     {
+        public override float MaxWidth
+        {
+            protected set
+            {
+                base.MaxWidth = value;
+                horizontalRadius = value / 2;
+                UpdateArea();
+            }
+        }
+
+        public override float MaxHeight
+        {
+            protected set
+            {
+                base.MaxHeight = value;
+                verticalRadius = value / 2;
+                UpdateArea();
+            }
+        }
+
         public float HorizontalRadius
         {
             get => horizontalRadius;
             set
             {
                 horizontalRadius = value;
-                UpdateValues();
+                base.MaxWidth = value * 2;
+                UpdateArea();
             }
         }
         private float horizontalRadius;
@@ -23,41 +44,33 @@ namespace MonoGame.ECS.Components.Bounds
             set
             {
                 verticalRadius = value;
-                UpdateValues();
+                base.MaxHeight = value * 2;
+                UpdateArea();
             }
         }
         private float verticalRadius;
 
-        public EllipticBody(float horizontalRadius, float verticalRadius)
+        public EllipticBody(float maxWidth, float maxHeight)
         {
-            this.horizontalRadius = horizontalRadius;
-            this.verticalRadius = verticalRadius;
-            UpdateValues();
+            MaxWidth = maxWidth;
+            MaxHeight = maxHeight;
         }
 
         public EllipticBody(float radius) : this(radius, radius)
         {
         }
 
-        private void UpdateValues()
-        {
-            MaxWidth = 2 * horizontalRadius;
-            MaxHeight = 2 * verticalRadius;
-            UpdateArea();
-            UpdateRelaviteBounds();
-        }
-
         private void UpdateArea()
         {
-            Area = (float)Math.PI * HorizontalRadius * VerticalRadius;
+            Area = (float)Math.PI * horizontalRadius * verticalRadius;
         }
 
         public override bool IsPointWithin(Vector2 point)
         {
             return GeometryUtils.IsWithinEllipse(
                 point,
-                HorizontalRadius,
-                VerticalRadius,
+                horizontalRadius,
+                verticalRadius,
                 RelativePosition);
         }
 

@@ -4,9 +4,9 @@ namespace MonoGame.ECS.Components.Bounds
 {
     public abstract class Body
     {
-        public float MaxWidth { get; protected set; }
+        public virtual float MaxWidth { get; protected set; }
 
-        public float MaxHeight { get; protected set; }
+        public virtual float MaxHeight { get; protected set; }
 
         public float Area { get; protected set; }
 
