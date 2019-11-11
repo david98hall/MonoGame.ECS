@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.ECS.Components.Bounds;
+using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace MonoGame.ECS.Components.Physics
@@ -33,7 +34,22 @@ namespace MonoGame.ECS.Components.Physics
         }
 
         public PhysicalBody(IEnumerable<Vector2> vertices, float areaDensity = 1)
-            : this(new Body(vertices), areaDensity)
+            : this(new PolygonBody(vertices), areaDensity)
+        {
+        }
+
+        public PhysicalBody(RectangleF rectangle, float areaDensity = 1)
+            : this(new PolygonBody(rectangle), areaDensity)
+        {
+        }
+
+        public PhysicalBody(float horizontalRadius, float verticalRadius, float scale = 1, float areaDensity = 1)
+            : this(new EllipticBody(horizontalRadius, verticalRadius, scale), areaDensity)
+        {
+        }
+
+        public PhysicalBody(float radius, float scale = 1, float areaDensity = 1)
+            : this(new EllipticBody(radius, scale), areaDensity)
         {
         }
 

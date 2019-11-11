@@ -1,11 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.ECS.Components.Input.Pointer;
 using MonoGame.Extended;
 using MonoGame.Extended.Entities;
 using MonoGame.Extended.Entities.Systems;
 using MonoGame.Extended.ViewportAdapters;
-using MonoGame.ECS.Components.Input.Pointer;
 using System;
-using MonoGame.Utils.Geometry;
 
 namespace MonoGame.ECS.Systems.Input.Pointer
 {
@@ -37,15 +36,7 @@ namespace MonoGame.ECS.Systems.Input.Pointer
         {
             var body = pointerInputBodyMapper.Get(entity).Body;
             var transform = transformMapper.Get(entity);
-            var bodyPosition = body.RelativePosition + transform.Position;
-
-            return GeometryUtils.IsWithinPolygon(
-                pointerLocation,
-                body.Shape.Vertices,
-                bodyPosition,
-                body.MaxWidth,
-                body.MaxHeight
-            );
+            return body.IsPointWithin(pointerLocation - transform.Position);
         }
 
     }
