@@ -18,12 +18,12 @@ namespace MonoGame.ECS.Components.Input.Pointer
         {
         }
 
-        public PointerInputBody(float horizontalRadius, float verticalRadius, float scale = 1)
-            : this(new EllipticBody(horizontalRadius, verticalRadius, scale))
+        public PointerInputBody(float horizontalRadius, float verticalRadius)
+            : this(new EllipticBody(horizontalRadius, verticalRadius))
         {
         }
 
-        public PointerInputBody(float radius, float scale = 1) : this(new EllipticBody(radius, scale))
+        public PointerInputBody(float radius) : this(new EllipticBody(radius))
         {
         }
 

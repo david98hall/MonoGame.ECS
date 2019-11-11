@@ -43,13 +43,13 @@ namespace MonoGame.ECS.Components.Physics
         {
         }
 
-        public PhysicalBody(float horizontalRadius, float verticalRadius, float scale = 1, float areaDensity = 1)
-            : this(new EllipticBody(horizontalRadius, verticalRadius, scale), areaDensity)
+        public PhysicalBody(float horizontalRadius, float verticalRadius, float areaDensity = 1)
+            : this(new EllipticBody(horizontalRadius, verticalRadius), areaDensity)
         {
         }
 
-        public PhysicalBody(float radius, float scale = 1, float areaDensity = 1)
-            : this(new EllipticBody(radius, scale), areaDensity)
+        public PhysicalBody(float radius, float areaDensity = 1)
+            : this(new EllipticBody(radius), areaDensity)
         {
         }
 

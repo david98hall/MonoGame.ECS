@@ -28,33 +28,21 @@ namespace MonoGame.ECS.Components.Bounds
         }
         private float verticalRadius;
 
-        public float Scale
-        {
-            get => scale;
-            set
-            {
-                scale = value;
-                UpdateValues();
-            }
-        }
-        private float scale;
-
-        public EllipticBody(float horizontalRadius, float verticalRadius, float scale = 1)
+        public EllipticBody(float horizontalRadius, float verticalRadius)
         {
             this.horizontalRadius = horizontalRadius;
             this.verticalRadius = verticalRadius;
-            this.scale = scale;
             UpdateValues();
         }
 
-        public EllipticBody(float radius, float scale = 1) : this(radius, radius, scale)
+        public EllipticBody(float radius) : this(radius, radius)
         {
         }
 
         private void UpdateValues()
         {
-            MaxWidth = horizontalRadius * Scale;
-            MaxHeight = verticalRadius * Scale;
+            MaxWidth = 2 * horizontalRadius;
+            MaxHeight = 2 * verticalRadius;
             UpdateArea();
             UpdateRelaviteBounds();
         }
@@ -70,7 +58,6 @@ namespace MonoGame.ECS.Components.Bounds
                 point,
                 HorizontalRadius,
                 VerticalRadius,
-                Scale,
                 RelativePosition);
         }
 
