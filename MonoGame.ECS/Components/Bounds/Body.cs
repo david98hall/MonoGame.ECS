@@ -23,12 +23,15 @@ namespace MonoGame.ECS.Components.Bounds
 
         public (float Left, float Top, float Right, float Bottom) RelativeBounds { get; private set; }
 
+        public Rectangle RelativeRectangleBounds { get; private set; }
+
         protected void UpdateRelaviteBounds()
         {
             RelativeBounds = (RelativePosition.X,
                 RelativePosition.Y,
                 RelativePosition.X + MaxWidth,
                 RelativePosition.Y + MaxHeight);
+            RelativeRectangleBounds = new Rectangle((int)RelativeBounds.Left, (int)RelativeBounds.Top, (int)MaxWidth, (int)MaxHeight);
         }
 
         public abstract bool IsPointWithin(Vector2 point);
