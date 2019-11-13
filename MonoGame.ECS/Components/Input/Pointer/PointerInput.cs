@@ -75,7 +75,7 @@ namespace MonoGame.ECS.Components.Input.Pointer
         }
 
         #region Register events
-        public void RegisterInputStart(PointerEventArgs args)
+        internal void RegisterInputStart(PointerEventArgs args)
         {
             var shouldInvoke = InvokeOnAllStartInputs || !IsDown;
             downPointers.Add(args.RawTouchLocation.Id);
@@ -85,7 +85,7 @@ namespace MonoGame.ECS.Components.Input.Pointer
             }
         }
 
-        public void RegisterInputMove(PointerEventArgs args)
+        internal void RegisterInputMove(PointerEventArgs args)
         {
             if (CountMovingAsDown)
             {
@@ -94,22 +94,22 @@ namespace MonoGame.ECS.Components.Input.Pointer
             OnMove?.Invoke(this, args);
         }
 
-        public void RegisterInputEndInBounds(PointerEventArgs args)
+        internal void RegisterInputEndInBounds(PointerEventArgs args)
         {
             RegisterReleasedInput(args, OnEndInBounds);
         }
 
-        public void RegisterInputEndOutsideBounds(PointerEventArgs args)
+        internal void RegisterInputEndOutsideBounds(PointerEventArgs args)
         {
             RegisterStoppedInput(args, OnEndOutsideBounds);
         }
 
-        public void RegisterCancelledInputInBounds(PointerEventArgs args)
+        internal void RegisterCancelledInputInBounds(PointerEventArgs args)
         {
             RegisterStoppedInput(args, OnCancelInBounds);
         }
 
-        public void RegisterCancelledInputOutsideBounds(PointerEventArgs args)
+        internal void RegisterCancelledInputOutsideBounds(PointerEventArgs args)
         {
             RegisterStoppedInput(args, OnCancelOutsideBounds);
         }
