@@ -10,11 +10,8 @@ namespace MonoGame.ECS.Worlds
     /// <typeparam name="T">E.g. an enum representing world identifications.</typeparam>
     public class WorldNavigator<T> where T : struct, IConvertible
     {
-
-        /// <summary>
-        /// The only instance of WorldNavigator.
-        /// </summary>
-        public static readonly WorldNavigator<T> INSTANCE = new WorldNavigator<T>();
+        // The only instance of this class
+        private static WorldNavigator<T> instance;
 
         #region Navigation history
         /// <summary>
@@ -69,6 +66,20 @@ namespace MonoGame.ECS.Worlds
             visitedWorlds = new Dictionary<T, World>();
             backHistory = new Stack<T>();
             forwardHistory = new Stack<T>();
+        }
+
+        /// <summary>
+        /// Gets the only instance of WorldNavigator.
+        /// </summary>
+        /// <returns>The instance.</returns>
+        public static WorldNavigator<T> GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new WorldNavigator<T>();
+            }
+
+            return instance;
         }
 
         #region Navigation
