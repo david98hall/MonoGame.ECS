@@ -10,7 +10,8 @@
     <Authors>David Hall</Authors>
     <Company>Davuskus</Company>
     <PackageTags>MonoGame, ECS, Entity, Entities, Component, Components, System, Systems, Extended, MonoGame.Extended, MonoGame.Extended.Entities</PackageTags>
-    <Version>1.0.9</Version>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>WorldNavigator class.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
