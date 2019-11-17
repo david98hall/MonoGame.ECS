@@ -6,14 +6,13 @@ using MonoGame.Utils.Tuples;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using static MonoGame.Utils.Text.StylizedTextParser;
 
 namespace MonoGame.ECS.Components.Appearance
 {
     /// <summary>
     /// Represents text with possibly different fonts, colors and sizes within itself. It is enumerable over the rows of its own text.
     /// </summary>
-    public class Text : IEnumerable<(IEnumerable<Word> Row, (float Width, float Height) Size)>
+    public class Text : IEnumerable<(IEnumerable<TextPart<Color, SpriteFont>> Row, (float Width, float Height) Size)>
     {
 
         #region Properties
@@ -65,7 +64,7 @@ namespace MonoGame.ECS.Components.Appearance
         #region Fields
         private readonly StylizedTextParser textParser;
 
-        private List<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rows;
+        private List<(IEnumerable<TextPart<Color, SpriteFont>> Row, MutableTuple<float, float> Size)> rows;
         #endregion
 
         #region Constructors
@@ -81,7 +80,7 @@ namespace MonoGame.ECS.Components.Appearance
             RelativeCenterPosition = new Vector2(0, 0);
             RowSpacing = 3;
             Alignment = TextAlignment.LEFT;
-            rows = new List<(IEnumerable<Word> Row, MutableTuple<float, float> Size)>(1);
+            rows = new List<(IEnumerable<TextPart<Color, SpriteFont>> Row, MutableTuple<float, float> Size)>(1);
         }
 
         /// <summary>
@@ -129,7 +128,7 @@ namespace MonoGame.ECS.Components.Appearance
             AddRows(textParser.ParseAndFitTextHorizontally(text, maxWidth));
         }
 
-        private void AddRows((IEnumerable<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> Rows, (float Width, float Height) TextSize) text)
+        private void AddRows((IEnumerable<(IEnumerable<TextPart<Color, SpriteFont>> Row, MutableTuple<float, float> Size)> Rows, (float Width, float Height) TextSize) text)
         {
             rows.AddRange(text.Rows);
             Size = text.TextSize;
@@ -137,7 +136,7 @@ namespace MonoGame.ECS.Components.Appearance
         #endregion
 
         #region Implementing IEnumerable
-        public IEnumerator<(IEnumerable<Word> Row, (float Width, float Height) Size)> GetEnumerator()
+        public IEnumerator<(IEnumerable<TextPart<Color, SpriteFont>> Row, (float Width, float Height) Size)> GetEnumerator()
         {
             return new RowEnumerator(rows);
         }
@@ -149,15 +148,10 @@ namespace MonoGame.ECS.Components.Appearance
         #endregion
 
         #region Datatypes        
-        public enum TextAlignment
-        {
-            LEFT, CENTER, RIGHT
-        }
-
-        public class RowEnumerator : IEnumerator<(IEnumerable<Word> Row, (float Width, float Height) Size)>
+        public class RowEnumerator : IEnumerator<(IEnumerable<TextPart<Color, SpriteFont>> Row, (float Width, float Height) Size)>
         {
 
-            public (IEnumerable<Word> Row, (float Width, float Height) Size) Current
+            public (IEnumerable<TextPart<Color, SpriteFont>> Row, (float Width, float Height) Size) Current
             {
                 get
                 {
@@ -168,10 +162,10 @@ namespace MonoGame.ECS.Components.Appearance
 
             object IEnumerator.Current => throw new NotImplementedException();
 
-            private IEnumerable<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rows;
-            private IEnumerator<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rowEnumerator;
+            private IEnumerable<(IEnumerable<TextPart<Color, SpriteFont>> Row, MutableTuple<float, float> Size)> rows;
+            private IEnumerator<(IEnumerable<TextPart<Color, SpriteFont>> Row, MutableTuple<float, float> Size)> rowEnumerator;
 
-            public RowEnumerator(IList<(IEnumerable<Word> Row, MutableTuple<float, float> Size)> rows)
+            public RowEnumerator(IList<(IEnumerable<TextPart<Color, SpriteFont>> Row, MutableTuple<float, float> Size)> rows)
             {
                 this.rows = rows;
                 Reset();
