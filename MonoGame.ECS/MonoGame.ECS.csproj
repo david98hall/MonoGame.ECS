@@ -18,7 +18,6 @@
     <PackageReference Include="MonoGame.Extended" Version="3.7.0" />
     <PackageReference Include="MonoGame.Extended.Entities" Version="3.7.0" />
     <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
-    <PackageReference Include="MonoGame.Utils" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +25,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MonoGame.Utils\MonoGame.Utils\MonoGame.Utils\MonoGame.Utils.csproj" />
   </ItemGroup>
 
 </Project>

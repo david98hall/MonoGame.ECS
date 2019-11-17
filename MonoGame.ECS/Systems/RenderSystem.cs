@@ -19,10 +19,10 @@ namespace MonoGame.ECS.Systems
         // Mappers
         private ComponentMapper<Transform2> transformMapper;
         private ComponentMapper<Sprite> spriteMapper;
-        private ComponentMapper<Text> textMapper;
+        private ComponentMapper<MGStylizedText> textMapper;
 
         public RenderSystem(GraphicsDevice graphicsDevice)
-            : base(Aspect.All(typeof(Transform2)).One(typeof(Sprite), typeof(Text)))
+            : base(Aspect.All(typeof(Transform2)).One(typeof(Sprite), typeof(MGStylizedText)))
         {
             this.graphicsDevice = graphicsDevice;
             spriteBatch = new SpriteBatch(graphicsDevice);
@@ -32,7 +32,7 @@ namespace MonoGame.ECS.Systems
         {
             transformMapper = mapperService.GetMapper<Transform2>();
             spriteMapper = mapperService.GetMapper<Sprite>();
-            textMapper = mapperService.GetMapper<Text>();
+            textMapper = mapperService.GetMapper<MGStylizedText>();
         }
 
         public override void Draw(GameTime gameTime)
@@ -66,7 +66,7 @@ namespace MonoGame.ECS.Systems
 
         private void DrawEntityText(int entityId, Transform2 transform)
         {
-            if (textMapper.TryGet(entityId, out Text text))
+            if (textMapper.TryGet(entityId, out MGStylizedText text))
             {
                 // Start drawing at entity position       
                 var startX = transform.Position.X + text.RelativeCenterPosition.X - text.Size.Width / 2;
@@ -80,15 +80,15 @@ namespace MonoGame.ECS.Systems
                     // Set where the row should be drawn on the x-axis depending on the text alignment
                     switch (text.Alignment)
                     {
-                        case Text.TextAlignment.LEFT:
+                        case MGStylizedText.TextAlignment.LEFT:
                             drawPosition = new Vector2(startX, drawPosition.Y);
                             break;
 
-                        case Text.TextAlignment.CENTER:
+                        case MGStylizedText.TextAlignment.CENTER:
                             drawPosition = new Vector2(startX + (text.Size.Width - RowSize.Width) / 2, drawPosition.Y);
                             break;
 
-                        case Text.TextAlignment.RIGHT:
+                        case MGStylizedText.TextAlignment.RIGHT:
                             drawPosition = new Vector2(startX + text.Size.Width - RowSize.Width, drawPosition.Y);
                             break;
 
