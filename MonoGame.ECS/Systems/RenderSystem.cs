@@ -84,7 +84,7 @@ namespace MonoGame.ECS.Systems
             {
                 DrawText(transform,
                     text2.RelativeCenterPosition,
-                    text2.Size.Width, text1.Size.Height,
+                    text2.Size.Width, text2.Size.Height,
                     text2.RowSpacing,
                     text2.Alignment,
                     text2);
