@@ -1,6 +1,7 @@
 ﻿using MonoGame.Extended.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MonoGame.ECS.Worlds
 {
@@ -95,11 +96,21 @@ namespace MonoGame.ECS.Worlds
             UpdateCurrentWorld(worldId, tryFindOld);
         }
 
+        public async void NavigateToAsync(T worldId, bool tryFindOld = false)
+        {
+            await Task.Run(() => NavigateTo(worldId, tryFindOld));
+        }
+
         public void NavigateBack(bool tryFindOld = true)
         {
             forwardHistory.Push(CurrentWorldId);
             UpdateCurrentWorld(backHistory.Pop(), tryFindOld);
             OnBackNavigation?.Invoke(CurrentWorldId);
+        }
+
+        public async void NavigateBackAsync(bool tryFindOld = true)
+        {
+            await Task.Run(() => NavigateBack(tryFindOld));
         }
 
         public void NavigateForward(bool tryFindOld = true)
@@ -108,6 +119,12 @@ namespace MonoGame.ECS.Worlds
             UpdateCurrentWorld(forwardHistory.Pop(), tryFindOld);
             OnForwardNavigation?.Invoke(CurrentWorldId);
         }
+
+        public async void NavigateForwardAsync(bool tryFindOld = true)
+        {
+            await Task.Run(() => NavigateForward(tryFindOld));
+        }
+
         #endregion
 
         #region Clearing and resetting
