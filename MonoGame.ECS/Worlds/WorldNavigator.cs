@@ -138,16 +138,19 @@ namespace MonoGame.ECS.Worlds
             CreateWorldActionNullCheck();
 
             // Get a world with the passed identification
-            var useOldWorld = tryFindOld && visitedWorlds.ContainsKey(worldId);
-            var world = useOldWorld
+            var world = tryFindOld && visitedWorlds.ContainsKey(worldId)
                 ? visitedWorlds[worldId]
                 : CreateWorldAction(worldId);
 
-            if (!useOldWorld)
+            if (!tryFindOld && !visitedWorlds.ContainsKey(worldId))
             {
                 // If chosen to create a new world, also add it to the 
                 // dictionary of all visited worlds
                 visitedWorlds.Add(worldId, world);
+            }
+            else if (!tryFindOld && visitedWorlds.ContainsKey(worldId))
+            {
+                visitedWorlds[worldId] = world;
             }
 
             // Update current world
