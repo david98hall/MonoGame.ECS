@@ -10,14 +10,15 @@
     <Authors>David Hall</Authors>
     <Company>Davuskus</Company>
     <PackageTags>MonoGame, ECS, Entity, Entities, Component, Components, System, Systems, Extended, MonoGame.Extended, MonoGame.Extended.Entities</PackageTags>
-    <Version>1.1.0</Version>
-    <PackageReleaseNotes>WorldNavigator class.</PackageReleaseNotes>
+    <Version>1.1.1</Version>
+    <PackageReleaseNotes>MGStylizedText, bug fixes, etc.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MonoGame.Extended" Version="3.7.0" />
     <PackageReference Include="MonoGame.Extended.Entities" Version="3.7.0" />
     <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
+    <PackageReference Include="MonoGame.Utils" Version="1.0.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +26,6 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\MonoGame.Utils\MonoGame.Utils\MonoGame.Utils\MonoGame.Utils.csproj" />
   </ItemGroup>
 
 </Project>
