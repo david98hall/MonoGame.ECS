@@ -16,6 +16,16 @@ namespace MonoGame.ECS.Components.Appearance
 
         public Vector2 RelativeCenterPosition { get; set; }
 
+        public MGStylizedText() : base()
+        {
+        }
+
+        public MGStylizedText(Color defaultColor, SpriteFont defaultFont, float maxWidth = float.MaxValue, float rowSpacing = 3)
+            : base(defaultColor, defaultFont, maxWidth, rowSpacing)
+        {
+            RelativeCenterPosition = Vector2.Zero;
+        }
+
         public MGStylizedText(string text, Color defaultColor, SpriteFont defaultFont, float maxWidth = float.MaxValue, float rowSpacing = 3)
             : base(text, defaultColor, defaultFont, maxWidth, rowSpacing)
         {
